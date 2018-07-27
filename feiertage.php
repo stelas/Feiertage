@@ -191,6 +191,7 @@ class FeiertagKalender {
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 12, 31, $jahr), 'Silvester'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 3, 31 - ($jahr + 4 + $jahr / 4) % 7, $jahr), 'Sommerzeit (+1h)'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 10, 31 - ($jahr + 1 + $jahr / 4) % 7, $jahr), 'Winterzeit (-1h)'));
+		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 7, 31 - ($jahr + 2 + $jahr / 4) % 7, $jahr), 'System Administrator Appreciation Day'));
 		sort($this->feiertage);
 	}
 
@@ -221,7 +222,7 @@ class FeiertagKalender {
 }
 
 if (isset($_GET['jahr']) && is_numeric($_GET['jahr'])) {
-	$jahr = max(2000, min(3000, intval($_GET['jahr'])));
+	$jahr = max(2000, min(2099, intval($_GET['jahr'])));
 	$feiertage = new FeiertagKalender($jahr);
 	if (!isset($_GET['raw'])) {
 		header('Content-Type: text/calendar; charset=utf-8');
