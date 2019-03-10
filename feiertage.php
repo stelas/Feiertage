@@ -236,23 +236,30 @@ if (isset($_GET['jahr']) && is_numeric($_GET['jahr'])) {
 	}
 }
 else {
-	echo "<!DOCTYPE html>\r\n"
-		. "<html lang=\"de\">\r\n"
-		. "<head><meta charset=\"utf-8\"><title>Feiertage in Deutschland</title></head>\r\n"
-		. "<body>\r\n"
-		. "<b>Feiertage als iCal-Datei herunterladen</b>\r\n"
-		. "<form method=\"get\">\r\n"
-		. "<label>Jahr:\r\n"
-		. "<select name=\"jahr\">\r\n";
+	echo '<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <title>Feiertage</title>
+  </head>
+  <body>
+    <form class="border border-light p-5">
+      <div class="text-center">
+        <h2 class="mb-4">Feiertage in Deutschland</h2>
+        <p>iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen f&uuml;r ausgew&auml;hltes Jahr zum Import in alle g&auml;ngigen Kalenderprogramme herunterladen.</p>
+        <p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=M4Z52Q9299MCQ&source=url"><img alt="Mit PayPal spenden" src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif"></a></p>
+      </div>
+      <select name="jahr" class="browser-default custom-select mb-2">';
 	$year = date('Y');
 	for ($i = 0; $i < 5; $i++)
 		echo "<option>" . strval($year + $i) . "</option>\r\n";
-	echo "</select>\r\n"
-		. "</label><br>\r\n"
-		. "<button type=\"submit\">Download</button>\r\n"
-		. "</form>\r\n"
-		. "</body>\r\n"
-		. "</html>";
+	echo '      </select>
+      <button type="submit" class="btn btn-primary btn-block">Download</button>
+    </form>
+  </body>
+</html>';
 }
 
 ?>
