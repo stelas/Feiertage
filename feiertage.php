@@ -249,7 +249,7 @@ else {
       <div class="text-center">
         <h2 class="mb-4">Feiertage in Deutschland</h2>
         <p>iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen f&uuml;r ausgew&auml;hltes Jahr zum Import in alle g&auml;ngigen Kalenderprogramme herunterladen.</p>
-        <p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=M4Z52Q9299MCQ&source=url"><img alt="Mit PayPal spenden" src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif"></a></p>
+        <p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=M4Z52Q9299MCQ&source=url" target="_blank" rel="noopener"><img alt="Mit PayPal spenden" src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif"></a></p>
       </div>
       <select name="jahr" class="browser-default custom-select mb-2">';
 	$year = date('Y');
