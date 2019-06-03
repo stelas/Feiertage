@@ -257,6 +257,9 @@ else {
 		echo "<option>" . strval($year + $i) . "</option>\r\n";
 	echo '      </select>
       <button type="submit" class="btn btn-primary btn-block">Download</button>
+      <div class="text-right">
+        <p><a href="https://www.dateihal.de/cms/imprint">Impressum</a> &amp; <a href="https://www.dateihal.de/cms/privacy">Datenschutz</a></p>
+      </div>
     </form>
   </body>
 </html>';
