@@ -89,7 +89,8 @@ class Feiertag {
 			. "DTSTAMP:{$this->GetDatum(true)}\r\n"
 			. "DTSTART;VALUE=DATE:{$this->GetDatum()}\r\n"
 			. "DTEND;VALUE=DATE:{$this->GetDatum()}\r\n"
-			. 'SUMMARY:' . addcslashes($this->name, ',\\;') . "\r\n";
+			. 'SUMMARY:' . addcslashes($this->name, ',\\;') . "\r\n"
+			. 'TRANSP:TRANSPARENT' . "\r\n";
 		if ($this->IsGesetzlich()) {
 			$s .= 'DESCRIPTION:Gesetzlicher Feiertag';
 			if (!$this->IsBundesweit())
