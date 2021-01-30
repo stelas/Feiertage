@@ -242,6 +242,18 @@ else {
 <html lang="de">
   <head>
     <meta charset="utf-8">
+    <meta name="title" content="Feiertage in Deutschland">
+    <meta name="description" content="iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen für ausgewähltes Jahr zum Import in alle gängigen Kalenderprogramme herunterladen.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.feiertage-kalender.de/">
+    <meta property="og:title" content="Feiertage in Deutschland">
+    <meta property="og:description" content="iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen für ausgewähltes Jahr zum Import in alle gängigen Kalenderprogramme herunterladen.">
+    <meta property="og:image" content="https://www.feiertage-kalender.de/img/screenshot.jpg">
+    <meta property="twitter:card" content="summary">
+    <meta property="twitter:url" content="https://www.feiertage-kalender.de/">
+    <meta property="twitter:title" content="Feiertage in Deutschland">
+    <meta property="twitter:description" content="iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen für ausgewähltes Jahr zum Import in alle gängigen Kalenderprogramme herunterladen.">
+    <meta property="twitter:image" content="https://www.feiertage-kalender.de/img/screenshot.jpg">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
     <title>Feiertage</title>
