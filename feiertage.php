@@ -258,22 +258,25 @@ else {
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
     <title>Feiertage</title>
   </head>
-  <body>
+  <body class="text-center">
     <form class="border border-light p-5">
-      <div class="text-center">
-        <h2 class="mb-4">Feiertage in Deutschland</h2>
-        <p>iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen f&uuml;r ausgew&auml;hltes Jahr zum Import in alle g&auml;ngigen Kalenderprogramme herunterladen.</p>
-        <p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=M4Z52Q9299MCQ&source=url" target="_blank" rel="noopener"><img alt="Mit PayPal spenden" src="btn_donateCC_LG.gif"></a></p>
-      </div>
-      <select name="jahr" class="browser-default custom-select mb-2">';
+      <h2 class="mb-4">Feiertage in Deutschland</h2>
+      <p>iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen f&uuml;r ausgew&auml;hltes Jahr zum Import in alle g&auml;ngigen Kalenderprogramme herunterladen.</p>
+      <p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=M4Z52Q9299MCQ&source=url" target="_blank" rel="noopener"><img alt="Mit PayPal spenden" src="btn_donateCC_LG.gif" width="126" height="47"></a></p>
+      <div class="form-floating">
+        <select class="form-select mb-2" id="jahr" name="jahr">
+          ';
 	$year = date('Y');
 	for ($i = 0; $i < 5; $i++)
-		echo "<option>" . strval($year + $i) . "</option>\r\n";
-	echo '      </select>
-      <button type="submit" class="btn btn-primary btn-block">Download</button>
-      <div class="text-right">
-        <p><a href="https://www.dateihal.de/cms/imprint">Impressum</a> &amp; <a href="https://www.dateihal.de/cms/privacy">Datenschutz</a></p>
+		echo '<option>' . strval($year + $i) . '</option>';
+	echo '
+        </select>
+        <label for="jahr">Kalenderjahr</label>
       </div>
+      <div class="d-grid">
+        <button type="submit" class="btn btn-primary mb-2">Download</button>
+      </div>
+      <p class="text-end"><a href="https://www.dateihal.de/cms/imprint">Impressum</a> &amp; <a href="https://www.dateihal.de/cms/privacy">Datenschutz</a></p>
     </form>
   </body>
 </html>';
