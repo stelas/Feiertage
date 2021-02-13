@@ -1,11 +1,11 @@
 <?php
 
 abstract class Bundesland {
-	private static $Namen = array('Baden-Württemberg', 'Bayern', 'Berlin', 'Brandenburg',
-					'Bremen', 'Hamburg', 'Hessen', 'Mecklenburg-Vorpommern',
-					'Niedersachsen', 'Nordrhein-Westfalen', 'Rheinland-Pfalz',
-					'Saarland', 'Sachsen', 'Sachsen-Anhalt',
-					'Schleswig-Holstein', 'Thüringen');
+	private static $Namen = array(array('Baden-Württemberg', 'BW'), array('Bayern', 'BY'), array('Berlin', 'BE'), array('Brandenburg', 'BB'),
+					array('Bremen', 'HB'), array('Hamburg', 'HH'), array('Hessen', 'HE'), array('Mecklenburg-Vorpommern', 'MV'),
+					array('Niedersachsen', 'NI'), array('Nordrhein-Westfalen', 'NW'), array('Rheinland-Pfalz', 'RP'),
+					array('Saarland', 'SL'), array('Sachsen', 'SN'), array('Sachsen-Anhalt', 'ST'),
+					array('Schleswig-Holstein', 'SH'), array('Thüringen', 'TH'));
 
 	const Baden_Wuerttemberg = 0;
 	const Bayern = 1;
@@ -28,9 +28,9 @@ abstract class Bundesland {
 		return count(self::$Namen);
 	}
 
-	public function GetName(int $land) {
+	public function GetName(int $land, bool $code = false) {
 		if ($land >= 0 && $land < self::Count())
-			return self::$Namen[$land];
+			return ($code) ? self::$Namen[$land][1] : self::$Namen[$land][0];
 		else
 			return '';
 	}
@@ -73,12 +73,12 @@ class Feiertag {
 		return in_array($land, $this->laender);
 	}
 
-	public function GetBundeslaender() {
+	public function GetBundeslaender(bool $code = false) {
 		$s = '';
 		for ($i = 0; $i < count($this->laender); $i++) {
 			if (strlen($s) > 0)
 				$s .= ', ';
-			$s .= Bundesland::GetName($this->laender[$i]);
+			$s .= Bundesland::GetName($this->laender[$i], $code);
 		}
 		return $s;
 	}
@@ -102,7 +102,7 @@ class Feiertag {
 	}
 
 	public function __toString() {
-		return date('Y-m-d', $this->datum) . ' ' . $this->name;
+		return date('Y-m-d', $this->datum) . "\t" . $this->name . "\t" . $this->GetBundeslaender(true);
 	}
 }
 
