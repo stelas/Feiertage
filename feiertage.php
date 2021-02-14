@@ -224,12 +224,16 @@ class FeiertagKalender {
 	}
 }
 
-if (isset($_GET['jahr']) && is_numeric($_GET['jahr'])) {
-	$jahr = max(2000, min(2099, intval($_GET['jahr'])));
+$year = date('Y');
+if (isset($_GET['jahr'])) {
+	if (is_numeric($_GET['jahr']))
+		$jahr = max(2000, min(2099, intval($_GET['jahr'])));
+	else
+		$jahr = $year;
 	$feiertage = new FeiertagKalender($jahr);
 	if (!isset($_GET['raw'])) {
 		header('Content-Type: text/calendar; charset=utf-8');
-		header("Content-Disposition: inline; filename=\"{$jahr}.ics\"");
+		header("Content-Disposition: inline; filename=\"Feiertage{$jahr}.ics\"");
 		echo $feiertage->GetVCalendar();
 	}
 	else {
@@ -243,20 +247,20 @@ else {
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="title" content="Feiertage in Deutschland">
+    <meta name="title" content="Feiertage in Deutschland | Kalender">
     <meta name="description" content="iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen für ausgewähltes Jahr zum Import in alle gängigen Kalenderprogramme herunterladen.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.feiertage-kalender.de/">
-    <meta property="og:title" content="Feiertage in Deutschland">
+    <meta property="og:title" content="Feiertage in Deutschland | Kalender">
     <meta property="og:description" content="iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen für ausgewähltes Jahr zum Import in alle gängigen Kalenderprogramme herunterladen.">
     <meta property="og:image" content="https://www.feiertage-kalender.de/img/screenshot.jpg">
     <meta property="twitter:card" content="summary">
     <meta property="twitter:url" content="https://www.feiertage-kalender.de/">
-    <meta property="twitter:title" content="Feiertage in Deutschland">
+    <meta property="twitter:title" content="Feiertage in Deutschland | Kalender">
     <meta property="twitter:description" content="iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen für ausgewähltes Jahr zum Import in alle gängigen Kalenderprogramme herunterladen.">
     <meta property="twitter:image" content="https://www.feiertage-kalender.de/img/screenshot.jpg">
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
-    <title>Feiertage</title>
+    <title>Feiertage | Kalender</title>
   </head>
   <body class="text-center">
     <form class="border border-light p-5">
@@ -266,7 +270,6 @@ else {
       <div class="form-floating">
         <select class="form-select mb-2" id="jahr" name="jahr">
           ';
-	$year = date('Y');
 	for ($i = 0; $i < 5; $i++)
 		echo '<option>' . strval($year + $i) . '</option>';
 	echo '
@@ -276,7 +279,8 @@ else {
       <div class="d-grid">
         <button type="submit" class="btn btn-primary mb-2">Download</button>
       </div>
-      <p class="text-end"><a href="https://www.dateihal.de/cms/imprint">Impressum</a> &amp; <a href="https://www.dateihal.de/cms/privacy">Datenschutz</a></p>
+      <p>iCal bzw. iCalendar ist ein standardisiertes Datenformat zum Austausch von Kalenderinhalten. Das Format wird von der Mehrzahl der Kalenderprogramme unterst&uuml;tzt, die webbasierte Kalenderdaten einbinden k&ouml;nnen, u.a. <a href="https://support.google.com/calendar/answer/37100" target="_blank" rel="noopener">Google Kalender</a>, <a href="https://support.microsoft.com/de-de/office/importieren-oder-abonnieren-eines-kalenders-in-outlook-com-cff1429c-5af6-41ec-a5b4-74f2c278e98c" target="_blank" rel="noopener">Microsoft Outlook</a>, <a href="https://support.mozilla.org/de/kb/Ferienkalender-hinzufuegen" target="_blank" rel="noopener">Mozilla Thunderbird</a>, <a href="https://support.apple.com/de-de/guide/iphone/iph3d1110d4/ios#iph30203de42" target="_blank" rel="noopener">iPhone Kalender</a> und <a href="https://support.apple.com/de-de/HT202361" target="_blank" rel="noopener">macOS Kalender</a>.</p>
+      <p class="text-end">Alle Angaben ohne Gew&auml;hr. | <a href="https://www.dateihal.de/cms/imprint">Impressum</a> | <a href="https://www.dateihal.de/cms/privacy">Datenschutz</a></p>
     </form>
   </body>
 </html>';
