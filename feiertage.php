@@ -248,6 +248,7 @@ else {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="title" content="Feiertage in Deutschland | Kalender">
+    <meta name="author" content="Steffen Lange">
     <meta name="description" content="iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen für ausgewähltes Jahr zum Import in alle gängigen Kalenderprogramme herunterladen.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://www.feiertage-kalender.de/">
