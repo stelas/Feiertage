@@ -49,7 +49,7 @@ class Feiertag {
 		return $this->name;
 	}
 
-	public function GetDatum(string $format) {
+	public function GetDatum(string $format = 'Ymd') {
 		return date($format, $this->datum);
 	}
 
@@ -85,8 +85,8 @@ class Feiertag {
 		$s = "BEGIN:VEVENT\r\n"
 			. 'UID:' . uniqid(get_class()) . "\r\n"
 			. "DTSTAMP:{$this->GetDatum('Ymd\THis\Z')}\r\n"
-			. "DTSTART;VALUE=DATE:{$this->GetDatum('Ymd')}\r\n"
-			. "DTEND;VALUE=DATE:{$this->GetDatum('Ymd')}\r\n"
+			. "DTSTART;VALUE=DATE:{$this->GetDatum()}\r\n"
+			. "DTEND;VALUE=DATE:{$this->GetDatum()}\r\n"
 			. 'SUMMARY:' . addcslashes($this->name, ',\\;') . "\r\n"
 			. 'TRANSP:TRANSPARENT' . "\r\n";
 		if ($this->IsGesetzlich()) {
