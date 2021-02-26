@@ -29,10 +29,7 @@ abstract class Bundesland {
 	}
 
 	public function GetName(int $land, bool $code = false) {
-		if ($land >= 0 && $land < self::Count())
-			return ($code) ? self::$Namen[$land][1] : self::$Namen[$land][0];
-		else
-			return '';
+		return ($code) ? self::$Namen[$land][1] : self::$Namen[$land][0];
 	}
 }
 
@@ -48,11 +45,12 @@ class Feiertag {
 		sort($this->laender);
 	}
 
-	public function GetDatum(bool $lang = false) {
-		if ($lang)
-			return date('Ymd\THis\Z', $this->datum);
-		else
-			return date('Ymd', $this->datum);
+	public function GetName() {
+		return $this->name;
+	}
+
+	public function GetDatum(string $format) {
+		return date($format, $this->datum);
 	}
 
 	public function IsGesetzlich() {
@@ -73,11 +71,11 @@ class Feiertag {
 		return in_array($land, $this->laender);
 	}
 
-	public function GetBundeslaender(bool $code = false) {
+	public function GetBundeslaender(string $sep = ', ', bool $code = false) {
 		$s = '';
 		for ($i = 0; $i < count($this->laender); $i++) {
 			if (strlen($s) > 0)
-				$s .= ', ';
+				$s .= $sep;
 			$s .= Bundesland::GetName($this->laender[$i], $code);
 		}
 		return $s;
@@ -86,9 +84,9 @@ class Feiertag {
 	public function GetVEvent() {
 		$s = "BEGIN:VEVENT\r\n"
 			. 'UID:' . uniqid(get_class()) . "\r\n"
-			. "DTSTAMP:{$this->GetDatum(true)}\r\n"
-			. "DTSTART;VALUE=DATE:{$this->GetDatum()}\r\n"
-			. "DTEND;VALUE=DATE:{$this->GetDatum()}\r\n"
+			. "DTSTAMP:{$this->GetDatum('Ymd\THis\Z')}\r\n"
+			. "DTSTART;VALUE=DATE:{$this->GetDatum('Ymd')}\r\n"
+			. "DTEND;VALUE=DATE:{$this->GetDatum('Ymd')}\r\n"
 			. 'SUMMARY:' . addcslashes($this->name, ',\\;') . "\r\n"
 			. 'TRANSP:TRANSPARENT' . "\r\n";
 		if ($this->IsGesetzlich()) {
@@ -102,7 +100,7 @@ class Feiertag {
 	}
 
 	public function __toString() {
-		return date('Y-m-d', $this->datum) . "\t" . $this->name . "\t" . $this->GetBundeslaender(true);
+		return $this->GetDatum('Y-m-d') . ';' . $this->name . ';' . $this->GetBundeslaender(',', true);
 	}
 }
 
@@ -198,6 +196,14 @@ class FeiertagKalender {
 		sort($this->feiertage);
 	}
 
+	public function Count() {
+		return count($this->feiertage);
+	}
+
+	public function GetFeiertag(int $n) {
+		return $this->feiertage[$n];
+	}
+
 	private function GetHeader() {
 		return "BEGIN:VCALENDAR\r\n"
 			. "VERSION:2.0\r\n"
@@ -224,21 +230,21 @@ class FeiertagKalender {
 	}
 }
 
-$year = date('Y');
+setlocale(LC_TIME, 'de_DE.utf8');
+$now = date('Y');
+$jahr = $now;
+if (isset($_GET['jahr']) && is_numeric($_GET['jahr']))
+	$jahr = max(2000, min(2099, intval($_GET['jahr'])));
+$tage = new FeiertagKalender($jahr);
 if (isset($_GET['jahr'])) {
-	if (is_numeric($_GET['jahr']))
-		$jahr = max(2000, min(2099, intval($_GET['jahr'])));
-	else
-		$jahr = $year;
-	$feiertage = new FeiertagKalender($jahr);
 	if (!isset($_GET['raw'])) {
 		header('Content-Type: text/calendar; charset=utf-8');
 		header("Content-Disposition: inline; filename=\"Feiertage{$jahr}.ics\"");
-		echo $feiertage->GetVCalendar();
+		echo $tage->GetVCalendar();
 	}
 	else {
 		header('Content-Type: text/plain; charset=utf-8');
-		echo $feiertage;
+		echo $tage;
 	}
 }
 else {
@@ -261,19 +267,64 @@ else {
     <meta property="twitter:description" content="iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen für ausgewähltes Jahr zum Import in alle gängigen Kalenderprogramme herunterladen.">
     <meta property="twitter:image" content="https://www.feiertage-kalender.de/img/screenshot.jpg">
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="jquery.dataTables.min.css">
+    <script src="jquery-3.5.1.min.js"></script>
+    <script src="jquery.dataTables.min.js"></script>
+    <script src="bootstrap.bundle.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $(\'[data-toggle="tooltip"]\').tooltip();
+        $("#feiertage").DataTable( {
+          language: { url: "de_de.json" },
+          ordering: false,
+          searching: false,
+          lengthChange: false
+        } );
+      });
+    </script>
     <title>Feiertage | Kalender</title>
   </head>
   <body>
-    <div class="container p-5 text-center">
+    <div class="container p-3 text-center">
       <h2 class="mb-4">Feiertage in Deutschland</h2>
-      <p>iCal<sup>1</sup>-Kalenderdatei mit bundes- und landesweiten Feiertagen f&uuml;r ausgew&auml;hltes Jahr zum Import in alle g&auml;ngigen Kalenderprogramme herunterladen.</p>
       <p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=M4Z52Q9299MCQ&source=url" target="_blank" rel="noopener"><img alt="Mit PayPal spenden" src="btn_donateCC_LG.gif" width="126" height="47"></a></p>
+      <table id="feiertage" class="table table-striped table-sm">
+        <thead class="table-light">
+          <tr>
+            <th>' . $now . '</th>
+            <th>Feiertag</th>
+';
+	for ($i = 0; $i < Bundesland::Count(); $i++)
+		echo '            <th data-toggle="tooltip" title="' . htmlentities(Bundesland::GetName($i)) . '">' . Bundesland::GetName($i, true) . '</th>
+';
+		echo '          </tr>
+        </thead>
+        <tbody>
+';
+	for ($i = 0; $i < $tage->Count(); $i++) {
+		$tag = $tage->GetFeiertag($i);
+		echo '          <tr><td data-toggle="tooltip" title="' . strftime('%A', $tag->GetDatum('U')) . '">' . $tag->GetDatum('d.m.') . '</td><td>' . htmlentities($tag->GetName()) . '</td>';
+		for ($j = 0; $j < Bundesland::Count(); $j++) {
+			echo '<td>';
+			if ($tag->IsInBundesland($j))
+				echo '&bigstar;';
+			else
+				echo '&star;';
+			echo '</td>';
+		}
+		echo '</tr>
+';
+	}
+	echo '        </tbody>
+      </table>
+      <hr>
+      <p>iCal<sup>1</sup>-Kalenderdatei mit bundes- und landesweiten Feiertagen f&uuml;r ausgew&auml;hltes Jahr zum Import in alle g&auml;ngigen Kalenderprogramme herunterladen:</p>
       <form class="border border-light">
         <div class="form-floating">
           <select class="form-select mb-2" id="jahr" name="jahr">
             ';
 	for ($i = 0; $i < 5; $i++)
-		echo '<option>' . strval($year + $i) . '</option>';
+		echo '<option>' . strval($now + $i) . '</option>';
 	echo '
           </select>
           <label for="jahr">Kalenderjahr</label>
