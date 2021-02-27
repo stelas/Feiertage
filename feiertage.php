@@ -286,8 +286,28 @@ else {
   </head>
   <body>
     <div class="container p-3 text-center">
-      <h2 class="mb-4">Feiertage in Deutschland</h2>
-      <p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=M4Z52Q9299MCQ&source=url" target="_blank" rel="noopener"><img alt="Mit PayPal spenden" src="btn_donateCC_LG.gif" width="126" height="47"></a></p>
+      <h2 class="mb-4">Kalender ' . $now . ' &ndash; Feiertage in Deutschland</h2>
+      <p class="text-start">
+      	iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen f&uuml;r ausgew&auml;hltes Jahr zum Import in alle g&auml;ngigen Kalenderprogramme herunterladen.
+      	iCal bzw. iCalendar ist ein standardisiertes Datenformat zum Austausch von Kalenderinhalten. Das Format wird von der Mehrzahl der Kalenderprogramme unterst&uuml;tzt, die webbasierte Kalenderdaten einbinden k&ouml;nnen,
+        u.a. <a href="https://support.google.com/calendar/answer/37100" target="_blank" rel="noopener">Google Kalender</a>, <a href="https://support.microsoft.com/de-de/office/importieren-oder-abonnieren-eines-kalenders-in-outlook-com-cff1429c-5af6-41ec-a5b4-74f2c278e98c" target="_blank" rel="noopener">Microsoft Outlook</a>, <a href="https://support.mozilla.org/de/kb/Ferienkalender-hinzufuegen" target="_blank" rel="noopener">Mozilla Thunderbird</a>, <a href="https://support.apple.com/de-de/guide/iphone/iph3d1110d4/ios#iph30203de42" target="_blank" rel="noopener">iPhone Kalender</a> und <a href="https://support.apple.com/de-de/HT202361" target="_blank" rel="noopener">macOS Kalender</a>.
+      </p>
+      <hr>
+      <form class="border border-light">
+        <div class="form-floating">
+          <select class="form-select mb-2" id="jahr" name="jahr">
+            ';
+	for ($i = 0; $i < 5; $i++)
+		echo '<option>' . strval($now + $i) . '</option>';
+	echo '
+          </select>
+          <label for="jahr">Kalenderjahr</label>
+        </div>
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary mb-2">Download</button>
+        </div>
+      </form>
+      <hr>
       <table id="feiertage" class="table table-striped table-sm">
         <thead class="table-light">
           <tr>
@@ -318,22 +338,7 @@ else {
 	echo '        </tbody>
       </table>
       <hr>
-      <p>iCal<sup>1</sup>-Kalenderdatei mit bundes- und landesweiten Feiertagen f&uuml;r ausgew&auml;hltes Jahr zum Import in alle g&auml;ngigen Kalenderprogramme herunterladen:</p>
-      <form class="border border-light">
-        <div class="form-floating">
-          <select class="form-select mb-2" id="jahr" name="jahr">
-            ';
-	for ($i = 0; $i < 5; $i++)
-		echo '<option>' . strval($now + $i) . '</option>';
-	echo '
-          </select>
-          <label for="jahr">Kalenderjahr</label>
-        </div>
-        <div class="d-grid">
-          <button type="submit" class="btn btn-primary mb-2">Download</button>
-        </div>
-      </form>
-      <ol class="text-start"><li>iCal bzw. iCalendar ist ein standardisiertes Datenformat zum Austausch von Kalenderinhalten. Das Format wird von der Mehrzahl der Kalenderprogramme unterst&uuml;tzt, die webbasierte Kalenderdaten einbinden k&ouml;nnen, u.a. <a href="https://support.google.com/calendar/answer/37100" target="_blank" rel="noopener">Google Kalender</a>, <a href="https://support.microsoft.com/de-de/office/importieren-oder-abonnieren-eines-kalenders-in-outlook-com-cff1429c-5af6-41ec-a5b4-74f2c278e98c" target="_blank" rel="noopener">Microsoft Outlook</a>, <a href="https://support.mozilla.org/de/kb/Ferienkalender-hinzufuegen" target="_blank" rel="noopener">Mozilla Thunderbird</a>, <a href="https://support.apple.com/de-de/guide/iphone/iph3d1110d4/ios#iph30203de42" target="_blank" rel="noopener">iPhone Kalender</a> und <a href="https://support.apple.com/de-de/HT202361" target="_blank" rel="noopener">macOS Kalender</a>.</li></ol>
+      <p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=M4Z52Q9299MCQ&amp;source=url" target="_blank" rel="noopener"><img alt="Mit PayPal spenden" src="btn_donateCC_LG.gif" width="126" height="47"></a></p>
       <p class="text-end">&copy; ' . $now . ' Steffen Lange | Alle Angaben ohne Gew&auml;hr. | <a href="https://www.dateihal.de/cms/imprint">Impressum</a> | <a href="https://www.dateihal.de/cms/privacy">Datenschutz</a></p>
     </div>
   </body>
