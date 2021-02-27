@@ -266,16 +266,16 @@ else {
     <meta property="twitter:title" content="Feiertage in Deutschland | Kalender">
     <meta property="twitter:description" content="iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen für ausgewähltes Jahr zum Import in alle gängigen Kalenderprogramme herunterladen.">
     <meta property="twitter:image" content="https://www.feiertage-kalender.de/img/screenshot.jpg">
-    <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="jquery.dataTables.min.css">
-    <script src="jquery-3.5.1.min.js"></script>
-    <script src="jquery.dataTables.min.js"></script>
-    <script src="bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="assets/jquery.dataTables.min.css">
+    <script src="assets/jquery-3.5.1.min.js"></script>
+    <script src="assets/jquery.dataTables.min.js"></script>
+    <script src="assets/bootstrap.bundle.min.js"></script>
     <script>
       $(document).ready(function() {
         $(\'[data-toggle="tooltip"]\').tooltip();
         $("#feiertage").DataTable( {
-          language: { url: "de_de.json" },
+          language: { url: "assets/de_de.json" },
           ordering: false,
           searching: false,
           lengthChange: false
@@ -338,7 +338,7 @@ else {
 	echo '        </tbody>
       </table>
       <hr>
-      <p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=M4Z52Q9299MCQ&amp;source=url" target="_blank" rel="noopener"><img alt="Mit PayPal spenden" src="btn_donateCC_LG.gif" width="126" height="47"></a></p>
+      <p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=M4Z52Q9299MCQ&amp;source=url" target="_blank" rel="noopener"><img alt="Mit PayPal spenden" src="assets/btn_donateCC_LG.gif" width="126" height="47"></a></p>
       <p class="text-end">&copy; ' . $now . ' Steffen Lange | Alle Angaben ohne Gew&auml;hr. | <a href="https://www.dateihal.de/cms/imprint">Impressum</a> | <a href="https://www.dateihal.de/cms/privacy">Datenschutz</a></p>
     </div>
   </body>
