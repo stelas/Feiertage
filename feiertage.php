@@ -29,7 +29,10 @@ abstract class Bundesland {
 	}
 
 	public function GetName(int $land, bool $code = false) {
-		return ($code) ? self::$Namen[$land][1] : self::$Namen[$land][0];
+		if ($land >= 0 && $land < self::Count())
+			return ($code) ? self::$Namen[$land][1] : self::$Namen[$land][0];
+		else
+			return '';
 	}
 }
 
@@ -214,10 +217,11 @@ class FeiertagKalender {
 		return "END:VCALENDAR\r\n";
 	}
 
-	public function GetVCalendar() {
+	public function GetVCalendar(int $land = -1) {
 		$s = $this->GetHeader();
 		for ($i = 0; $i < count($this->feiertage); $i++)
-			$s .= $this->feiertage[$i]->GetVEvent();
+			if ($land == - 1 || !$this->feiertage[$i]->IsGesetzlich() || $this->feiertage[$i]->IsInBundesland($land))
+				$s .= $this->feiertage[$i]->GetVEvent();
 		$s .= $this->GetFooter();
 		return $s;
 	}
@@ -238,92 +242,114 @@ if (isset($_GET['jahr']) && is_numeric($_GET['jahr']))
 $tage = new FeiertagKalender($jahr);
 if (isset($_GET['jahr'])) {
 	if (!isset($_GET['raw'])) {
+		$land = -1;
+		if (isset($_GET['land']) && is_numeric($_GET['land']))
+			$land = max(0, min(Bundesland::Count(), intval($_GET['land']))) - 1;
+		$name = Bundesland::GetName($land, true);
 		header('Content-Type: text/calendar; charset=utf-8');
-		header("Content-Disposition: inline; filename=\"Feiertage{$jahr}.ics\"");
-		echo $tage->GetVCalendar();
+		header("Content-Disposition: inline; filename=\"Feiertage{$name}{$jahr}.ics\"");
+		echo $tage->GetVCalendar($land);
 	}
 	else {
 		header('Content-Type: text/plain; charset=utf-8');
 		echo $tage;
 	}
+	exit(0);
 }
-else {
-	echo '<!doctype html>
+?>
+<!doctype html>
 <html lang="de">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="title" content="Feiertage in Deutschland | Kalender">
-    <meta name="author" content="Steffen Lange">
-    <meta name="description" content="iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen für ausgewähltes Jahr zum Import in alle gängigen Kalenderprogramme herunterladen.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.feiertage-kalender.de/">
-    <meta property="og:title" content="Feiertage in Deutschland | Kalender">
-    <meta property="og:description" content="iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen für ausgewähltes Jahr zum Import in alle gängigen Kalenderprogramme herunterladen.">
-    <meta property="og:image" content="https://www.feiertage-kalender.de/img/screenshot.jpg">
-    <meta property="twitter:card" content="summary">
-    <meta property="twitter:url" content="https://www.feiertage-kalender.de/">
-    <meta property="twitter:title" content="Feiertage in Deutschland | Kalender">
-    <meta property="twitter:description" content="iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen für ausgewähltes Jahr zum Import in alle gängigen Kalenderprogramme herunterladen.">
-    <meta property="twitter:image" content="https://www.feiertage-kalender.de/img/screenshot.jpg">
-    <link rel="stylesheet" type="text/css" href="assets/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="assets/jquery.dataTables.min.css">
-    <script src="assets/jquery-3.5.1.min.js"></script>
-    <script src="assets/jquery.dataTables.min.js"></script>
-    <script src="assets/bootstrap.bundle.min.js"></script>
-    <script>
-      $(document).ready(function() {
-        $(\'[data-toggle="tooltip"]\').tooltip();
-        $("#feiertage").DataTable( {
-          language: { url: "assets/de_de.json" },
-          ordering: false,
-          searching: false,
-          lengthChange: false
-        } );
-      });
-    </script>
-    <title>Feiertage | Kalender</title>
-  </head>
-  <body>
-    <div class="container p-3 text-center">
-      <h2 class="mb-4">Kalender ' . $now . ' &ndash; Feiertage in Deutschland</h2>
-      <p class="text-start">
-      	iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen f&uuml;r ausgew&auml;hltes Jahr zum Import in alle g&auml;ngigen Kalenderprogramme herunterladen.
-      	iCal bzw. iCalendar ist ein standardisiertes Datenformat zum Austausch von Kalenderinhalten. Das Format wird von der Mehrzahl der Kalenderprogramme unterst&uuml;tzt, die webbasierte Kalenderdaten einbinden k&ouml;nnen,
-        u.a. <a href="https://support.google.com/calendar/answer/37100" target="_blank" rel="noopener">Google Kalender</a>, <a href="https://support.microsoft.com/de-de/office/importieren-oder-abonnieren-eines-kalenders-in-outlook-com-cff1429c-5af6-41ec-a5b4-74f2c278e98c" target="_blank" rel="noopener">Microsoft Outlook</a>, <a href="https://support.mozilla.org/de/kb/Ferienkalender-hinzufuegen" target="_blank" rel="noopener">Mozilla Thunderbird</a>, <a href="https://support.apple.com/de-de/guide/iphone/iph3d1110d4/ios#iph30203de42" target="_blank" rel="noopener">iPhone Kalender</a> und <a href="https://support.apple.com/de-de/HT202361" target="_blank" rel="noopener">macOS Kalender</a>.
-      </p>
-      <hr>
-      <form class="border border-light">
-        <div class="form-floating">
-          <select class="form-select mb-2" id="jahr" name="jahr">
-            ';
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="title" content="Feiertage in Deutschland | Kalender">
+		<meta name="author" content="Steffen Lange">
+		<meta name="description" content="iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen für ausgewähltes Jahr zum Import in alle gängigen Kalenderprogramme herunterladen.">
+		<meta property="og:type" content="website">
+		<meta property="og:url" content="https://www.feiertage-kalender.de/">
+		<meta property="og:title" content="Feiertage in Deutschland | Kalender">
+		<meta property="og:description" content="iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen für ausgewähltes Jahr zum Import in alle gängigen Kalenderprogramme herunterladen.">
+		<meta property="og:image" content="https://www.feiertage-kalender.de/img/screenshot.jpg">
+		<meta property="twitter:card" content="summary">
+		<meta property="twitter:url" content="https://www.feiertage-kalender.de/">
+		<meta property="twitter:title" content="Feiertage in Deutschland | Kalender">
+		<meta property="twitter:description" content="iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen für ausgewähltes Jahr zum Import in alle gängigen Kalenderprogramme herunterladen.">
+		<meta property="twitter:image" content="https://www.feiertage-kalender.de/img/screenshot.jpg">
+		<link rel="stylesheet" type="text/css" href="assets/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="assets/jquery.dataTables.min.css">
+		<script src="assets/jquery-3.5.1.min.js"></script>
+		<script src="assets/jquery.dataTables.min.js"></script>
+		<script src="assets/bootstrap.bundle.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				$('[data-toggle="tooltip"]').tooltip();
+				$("#feiertage").DataTable( {
+					language: { url: "assets/de_de.json" },
+					ordering: false,
+					searching: false,
+					lengthChange: false
+				} );
+			});
+		</script>
+		<title>Feiertage | Kalender</title>
+	</head>
+	<body>
+		<div class="container p-3 text-center">
+		<h2 class="mb-4">Kalender <?php echo $now; ?> &ndash; Feiertage in Deutschland</h2>
+		<p class="text-start">
+			iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen f&uuml;r ausgew&auml;hltes Jahr zum Import in alle g&auml;ngigen Kalenderprogramme herunterladen.
+			iCal bzw. iCalendar ist ein standardisiertes Datenformat zum Austausch von Kalenderinhalten. Das Format wird von der Mehrzahl der Kalenderprogramme unterst&uuml;tzt, die webbasierte Kalenderdaten einbinden k&ouml;nnen,
+			u.a. <a href="https://support.google.com/calendar/answer/37100" target="_blank" rel="noopener">Google Kalender</a>, <a href="https://support.microsoft.com/de-de/office/importieren-oder-abonnieren-eines-kalenders-in-outlook-com-cff1429c-5af6-41ec-a5b4-74f2c278e98c" target="_blank" rel="noopener">Microsoft Outlook</a>, <a href="https://support.mozilla.org/de/kb/Ferienkalender-hinzufuegen" target="_blank" rel="noopener">Mozilla Thunderbird</a>, <a href="https://support.apple.com/de-de/guide/iphone/iph3d1110d4/ios#iph30203de42" target="_blank" rel="noopener">iPhone Kalender</a> und <a href="https://support.apple.com/de-de/HT202361" target="_blank" rel="noopener">macOS Kalender</a>.
+		</p>
+		<hr>
+		<form>
+			<div class="row">
+				<div class="col">
+					<div class="form-floating">
+						<select class="form-select" id="jahr" name="jahr">
+<?php
 	for ($i = 0; $i < 5; $i++)
-		echo '<option>' . strval($now + $i) . '</option>';
-	echo '
-          </select>
-          <label for="jahr">Kalenderjahr</label>
-        </div>
-        <div class="d-grid">
-          <button type="submit" class="btn btn-primary mb-2">Download</button>
-        </div>
-      </form>
-      <hr>
-      <table id="feiertage" class="table table-striped table-sm">
-        <thead class="table-light">
-          <tr>
-            <th>' . $now . '</th>
-            <th>Feiertag</th>
-';
+		echo "\t\t\t\t\t\t\t<option>" . strval($now + $i) . '</option>' . PHP_EOL;
+?>
+						</select>
+						<label for="jahr">Kalenderjahr</label>
+					</div>
+				</div>
+				<div class="col">
+					<div class="form-floating">
+						<select class="form-select" id="land" name="land">
+							<option value="0">Deutschland</option>
+<?php
 	for ($i = 0; $i < Bundesland::Count(); $i++)
-		echo '            <th data-toggle="tooltip" title="' . htmlentities(Bundesland::GetName($i)) . '">' . Bundesland::GetName($i, true) . '</th>
-';
-		echo '          </tr>
-        </thead>
-        <tbody>
-';
+		echo "\t\t\t\t\t\t\t" . '<option value="' . strval($i + 1) . '">' . htmlentities(Bundesland::GetName($i)) . '</option>' . PHP_EOL;
+?>
+						</select>
+						<label for="land">Bundesland</label>
+					</div>
+				</div>
+				<div class="col d-grid">
+					<button type="submit" class="btn btn-primary">Download</button>
+				</div>
+			</div>
+		</form>
+		<hr>
+		<table id="feiertage" class="table table-striped table-sm">
+			<thead class="table-light">
+				<tr>
+					<th><?php echo $now; ?></th>
+					<th>Feiertag</th>
+<?php
+	for ($i = 0; $i < Bundesland::Count(); $i++)
+		echo "\t\t\t\t\t" . '<th data-toggle="tooltip" title="' . htmlentities(Bundesland::GetName($i)) . '">' . Bundesland::GetName($i, true) . '</th>' . PHP_EOL;
+?>
+				</tr>
+			</thead>
+			<tbody>
+<?php
 	for ($i = 0; $i < $tage->Count(); $i++) {
 		$tag = $tage->GetFeiertag($i);
-		echo '          <tr><td data-toggle="tooltip" title="' . strftime('%A', $tag->GetDatum('U')) . '">' . $tag->GetDatum('d.m.') . '</td><td>' . htmlentities($tag->GetName()) . '</td>';
+		echo "\t\t\t\t<tr>" . PHP_EOL;
+		echo "\t\t\t\t\t" . '<td data-toggle="tooltip" title="' . strftime('%A', $tag->GetDatum('U')) . '">' . $tag->GetDatum('d.m.') . '</td><td>' . htmlentities($tag->GetName()) . '</td>' . PHP_EOL . "\t\t\t\t\t";
 		for ($j = 0; $j < Bundesland::Count(); $j++) {
 			echo '<td>';
 			if ($tag->IsInBundesland($j))
@@ -332,17 +358,14 @@ else {
 				echo '&star;';
 			echo '</td>';
 		}
-		echo '</tr>
-';
+		echo PHP_EOL . "\t\t\t\t" . '</tr>' . PHP_EOL;
 	}
-	echo '        </tbody>
-      </table>
-      <hr>
-      <p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=M4Z52Q9299MCQ&amp;source=url" target="_blank" rel="noopener"><img alt="Mit PayPal spenden" src="assets/btn_donateCC_LG.gif" width="126" height="47"></a></p>
-      <p class="text-end">&copy; ' . $now . ' Steffen Lange | Alle Angaben ohne Gew&auml;hr. | <a href="https://www.dateihal.de/cms/imprint">Impressum</a> | <a href="https://www.dateihal.de/cms/privacy">Datenschutz</a></p>
-    </div>
-  </body>
-</html>';
-}
-
 ?>
+			</tbody>
+		</table>
+		<hr>
+		<p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=M4Z52Q9299MCQ&amp;source=url" target="_blank" rel="noopener"><img alt="Mit PayPal spenden" src="assets/btn_donateCC_LG.gif" width="126" height="47"></a></p>
+		<p class="text-end">&copy; <?php echo $now; ?> Steffen Lange | Alle Angaben ohne Gew&auml;hr. | <a href="https://www.dateihal.de/cms/imprint">Impressum</a> | <a href="https://www.dateihal.de/cms/privacy">Datenschutz</a></p>
+	</div>
+	</body>
+</html>
