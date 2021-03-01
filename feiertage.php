@@ -305,8 +305,9 @@ if (isset($_GET['jahr'])) {
 			<div class="row">
 				<div class="col"><div class="form-floating">
 					<select class="form-select" id="jahr" name="jahr">
+						<option selected><?php echo $now; ?></option>
 <?php
-	for ($i = 0; $i < 5; $i++)
+	for ($i = 1; $i < 5; $i++)
 		echo "\t\t\t\t\t\t<option>" . strval($now + $i) . '</option>' . PHP_EOL;
 ?>
 					</select>
@@ -314,7 +315,7 @@ if (isset($_GET['jahr'])) {
 				</div></div>
 				<div class="col"><div class="form-floating">
 					<select class="form-select" id="land" name="land">
-						<option value="0">Deutschland</option>
+						<option value="0" selected>Deutschland</option>
 <?php
 	for ($i = 0; $i < Bundesland::Count(); $i++)
 		echo "\t\t\t\t\t\t" . '<option value="' . strval($i + 1) . '">' . htmlentities(Bundesland::GetName($i)) . '</option>' . PHP_EOL;
