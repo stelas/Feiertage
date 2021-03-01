@@ -293,9 +293,8 @@ if (isset($_GET['jahr'])) {
 		</script>
 		<title>Feiertage | Kalender</title>
 	</head>
-	<body>
-		<div class="container p-3 text-center">
-		<h2 class="mb-4">Kalender <?php echo $now; ?> &ndash; Feiertage in Deutschland</h2>
+	<body><div class="container p-3 text-center">
+		<h2 class="my-4">Kalender <?php echo $now; ?> &ndash; Feiertage in Deutschland</h2>
 		<p class="text-start">
 			iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen f&uuml;r ausgew&auml;hltes Jahr zum Import in alle g&auml;ngigen Kalenderprogramme herunterladen.
 			iCal bzw. iCalendar ist ein standardisiertes Datenformat zum Austausch von Kalenderinhalten. Das Format wird von der Mehrzahl der Kalenderprogramme unterst&uuml;tzt, die webbasierte Kalenderdaten einbinden k&ouml;nnen,
@@ -304,29 +303,25 @@ if (isset($_GET['jahr'])) {
 		<hr>
 		<form>
 			<div class="row">
-				<div class="col">
-					<div class="form-floating">
-						<select class="form-select" id="jahr" name="jahr">
+				<div class="col"><div class="form-floating">
+					<select class="form-select" id="jahr" name="jahr">
 <?php
 	for ($i = 0; $i < 5; $i++)
-		echo "\t\t\t\t\t\t\t<option>" . strval($now + $i) . '</option>' . PHP_EOL;
+		echo "\t\t\t\t\t\t<option>" . strval($now + $i) . '</option>' . PHP_EOL;
 ?>
-						</select>
-						<label for="jahr">Kalenderjahr</label>
-					</div>
-				</div>
-				<div class="col">
-					<div class="form-floating">
-						<select class="form-select" id="land" name="land">
-							<option value="0">Deutschland</option>
+					</select>
+					<label for="jahr">Kalenderjahr</label>
+				</div></div>
+				<div class="col"><div class="form-floating">
+					<select class="form-select" id="land" name="land">
+						<option value="0">Deutschland</option>
 <?php
 	for ($i = 0; $i < Bundesland::Count(); $i++)
-		echo "\t\t\t\t\t\t\t" . '<option value="' . strval($i + 1) . '">' . htmlentities(Bundesland::GetName($i)) . '</option>' . PHP_EOL;
+		echo "\t\t\t\t\t\t" . '<option value="' . strval($i + 1) . '">' . htmlentities(Bundesland::GetName($i)) . '</option>' . PHP_EOL;
 ?>
-						</select>
-						<label for="land">Bundesland</label>
-					</div>
-				</div>
+					</select>
+					<label for="land">Bundesland</label>
+				</div></div>
 				<div class="col d-grid">
 					<button type="submit" class="btn btn-primary">Download</button>
 				</div>
@@ -348,8 +343,8 @@ if (isset($_GET['jahr'])) {
 <?php
 	for ($i = 0; $i < $tage->Count(); $i++) {
 		$tag = $tage->GetFeiertag($i);
-		echo "\t\t\t\t<tr>" . PHP_EOL;
-		echo "\t\t\t\t\t" . '<td data-toggle="tooltip" title="' . strftime('%A', $tag->GetDatum('U')) . '">' . $tag->GetDatum('d.m.') . '</td><td>' . htmlentities($tag->GetName()) . '</td>' . PHP_EOL . "\t\t\t\t\t";
+		echo "\t\t\t\t<tr>";
+		echo '<td data-toggle="tooltip" title="' . strftime('%A', $tag->GetDatum('U')) . '">' . $tag->GetDatum('d.m.') . '</td><td>' . htmlentities($tag->GetName()) . '</td>' . PHP_EOL . "\t\t\t\t";
 		for ($j = 0; $j < Bundesland::Count(); $j++) {
 			echo '<td>';
 			if ($tag->IsInBundesland($j))
@@ -358,7 +353,7 @@ if (isset($_GET['jahr'])) {
 				echo '&star;';
 			echo '</td>';
 		}
-		echo PHP_EOL . "\t\t\t\t" . '</tr>' . PHP_EOL;
+		echo '</tr>' . PHP_EOL;
 	}
 ?>
 			</tbody>
@@ -366,6 +361,5 @@ if (isset($_GET['jahr'])) {
 		<hr>
 		<p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=M4Z52Q9299MCQ&amp;source=url" target="_blank" rel="noopener"><img alt="Mit PayPal spenden" src="assets/btn_donateCC_LG.gif" width="126" height="47"></a></p>
 		<p class="text-end">&copy; <?php echo $now; ?> Steffen Lange | Alle Angaben ohne Gew&auml;hr. | <a href="https://www.dateihal.de/cms/imprint">Impressum</a> | <a href="https://www.dateihal.de/cms/privacy">Datenschutz</a></p>
-	</div>
-	</body>
+	</div></body>
 </html>
