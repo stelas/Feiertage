@@ -277,7 +277,7 @@ if (isset($_GET['jahr'])) {
 		<meta property="twitter:image" content="https://www.feiertage-kalender.de/img/screenshot.jpg">
 		<link rel="stylesheet" type="text/css" href="assets/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="assets/jquery.dataTables.min.css">
-		<script src="assets/jquery-3.5.1.min.js"></script>
+		<script src="assets/jquery-3.6.0.min.js"></script>
 		<script src="assets/jquery.dataTables.min.js"></script>
 		<script src="assets/bootstrap.bundle.min.js"></script>
 		<script>
