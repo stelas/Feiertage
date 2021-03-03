@@ -174,7 +174,8 @@ class FeiertagKalender {
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 10, 31, $jahr), 'Halloween'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 10, 31, $jahr), 'Reformationstag',
 					array(Bundesland::Brandenburg, Bundesland::Mecklenburg_Vorpommern, Bundesland::Sachsen,
-						Bundesland::Sachsen_Anhalt, Bundesland::Thueringen)));
+						Bundesland::Sachsen_Anhalt, Bundesland::Thueringen, Bundesland::Bremen, Bundesland::Hamburg,
+						Bundesland::Niedersachsen, Bundesland::Schleswig_Holstein)));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 11, 1, $jahr), 'Allerheiligen',
 					array(Bundesland::Baden_Wuerttemberg, Bundesland::Bayern, Bundesland::Nordrhein_Westfalen,
 						Bundesland::Rheinland_Pfalz, Bundesland::Saarland)));
