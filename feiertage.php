@@ -297,7 +297,7 @@ if (isset($_GET['jahr'])) {
 	<body><div class="container p-3 text-center">
 		<h2 class="my-4">Kalender <?php echo $now; ?> &ndash; Feiertage in Deutschland</h2>
 		<p class="text-start">
-			iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen f&uuml;r ausgew&auml;hltes Jahr zum Import in alle g&auml;ngigen Kalenderprogramme herunterladen.
+			iCal-Kalenderdatei mit bundes- und landesweiten <a href="https://de.m.wikipedia.org/wiki/Gesetzliche_Feiertage_in_Deutschland" target="_blank" rel="noopener">Feiertagen</a> f&uuml;r ausgew&auml;hltes Jahr zum Import in alle g&auml;ngigen Kalenderprogramme herunterladen.
 			iCal bzw. iCalendar ist ein standardisiertes Datenformat zum Austausch von Kalenderinhalten. Das Format wird von der Mehrzahl der Kalenderprogramme unterst&uuml;tzt, die webbasierte Kalenderdaten einbinden k&ouml;nnen,
 			u.a. <a href="https://support.google.com/calendar/answer/37100" target="_blank" rel="noopener">Google Kalender</a>, <a href="https://support.microsoft.com/de-de/office/importieren-oder-abonnieren-eines-kalenders-in-outlook-com-cff1429c-5af6-41ec-a5b4-74f2c278e98c" target="_blank" rel="noopener">Microsoft Outlook</a>, <a href="https://support.mozilla.org/de/kb/Ferienkalender-hinzufuegen" target="_blank" rel="noopener">Mozilla Thunderbird</a>, <a href="https://support.apple.com/de-de/guide/iphone/iph3d1110d4/ios#iph30203de42" target="_blank" rel="noopener">iPhone Kalender</a> und <a href="https://support.apple.com/de-de/HT202361" target="_blank" rel="noopener">macOS Kalender</a>.
 		</p>
@@ -362,6 +362,6 @@ if (isset($_GET['jahr'])) {
 		</table>
 		<hr>
 		<p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=M4Z52Q9299MCQ&amp;source=url" target="_blank" rel="noopener"><img alt="Mit PayPal spenden" src="assets/btn_donateCC_LG.gif" width="126" height="47"></a></p>
-		<p class="text-end">&copy; <?php echo $now; ?> Steffen Lange | Alle Angaben ohne Gew&auml;hr. | <a href="https://www.dateihal.de/cms/imprint">Impressum</a> | <a href="https://www.dateihal.de/cms/privacy">Datenschutz</a></p>
+		<p class="text-end">&copy; <?php echo $now; ?> <a href="https://steffen.lange.tl/">Steffen Lange</a> | Alle Angaben ohne Gew&auml;hr. | <a href="https://www.dateihal.de/cms/imprint">Impressum</a> | <a href="https://www.dateihal.de/cms/privacy">Datenschutz</a></p>
 	</div></body>
 </html>
