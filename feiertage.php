@@ -292,7 +292,7 @@ if (isset($_GET['jahr'])) {
 				} );
 			});
 		</script>
-		<title>Feiertage | Kalender</title>
+		<title>Feiertagskalender</title>
 	</head>
 	<body><div class="container p-3 text-center">
 		<h2 class="my-4">Kalender <?php echo $now; ?> &ndash; Feiertage in Deutschland</h2>
