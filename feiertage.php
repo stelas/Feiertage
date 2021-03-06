@@ -337,7 +337,7 @@ if (isset($_GET['jahr'])) {
 					<th>Feiertag</th>
 <?php
 	for ($i = 0; $i < Bundesland::Count(); $i++)
-		echo "\t\t\t\t\t" . '<th data-toggle="tooltip" title="' . htmlentities(Bundesland::GetName($i)) . '">' . Bundesland::GetName($i, true) . '</th>' . PHP_EOL;
+		echo "\t\t\t\t\t" . '<th><abbr data-toggle="tooltip" title="' . htmlentities(Bundesland::GetName($i)) . '">' . Bundesland::GetName($i, true) . '</abbr></th>' . PHP_EOL;
 ?>
 				</tr>
 			</thead>
