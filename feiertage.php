@@ -1,5 +1,7 @@
 <?php
 
+require 'season.php';
+
 abstract class Bundesland {
 	private static $Namen = array(array('Baden-Württemberg', 'BW'), array('Bayern', 'BY'), array('Berlin', 'BE'), array('Brandenburg', 'BB'),
 					array('Bremen', 'HB'), array('Hamburg', 'HH'), array('Hessen', 'HE'), array('Mecklenburg-Vorpommern', 'MV'),
@@ -140,6 +142,8 @@ class FeiertagKalender {
 				Bundesland::Schleswig_Holstein, Bundesland::Thueringen);
 		$ostersonntag = $this->calcOstersonntag($jahr);
 		$busstag = mktime(0, 0, 0, 11, 22 - ($jahr - 1 + $jahr / 4) % 7, $jahr);
+		$jahreszeiten = new Season();
+		$jahreszeiten->calc($jahr);
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 1, 1, $jahr), 'Neujahr', $alle));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 1, 6, $jahr), 'Heilige Drei Könige',
 					array(Bundesland::Baden_Wuerttemberg, Bundesland::Bayern, Bundesland::Sachsen_Anhalt)));
@@ -197,6 +201,10 @@ class FeiertagKalender {
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 3, 31 - ($jahr + 4 + $jahr / 4) % 7, $jahr), 'Sommerzeit (+1h)'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 10, 31 - ($jahr + 1 + $jahr / 4) % 7, $jahr), 'Winterzeit (-1h)'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 7, 31 - ($jahr + 2 + $jahr / 4) % 7, $jahr), 'System Administrator Appreciation Day'));
+		array_push($this->feiertage, new Feiertag($jahreszeiten->get(Season::Spring), 'Frühlingsanfang'));
+		array_push($this->feiertage, new Feiertag($jahreszeiten->get(Season::Summer), 'Sommeranfang'));
+		array_push($this->feiertage, new Feiertag($jahreszeiten->get(Season::Autumn), 'Herbstanfang'));
+		array_push($this->feiertage, new Feiertag($jahreszeiten->get(Season::Winter), 'Winteranfang'));
 		sort($this->feiertage);
 	}
 
