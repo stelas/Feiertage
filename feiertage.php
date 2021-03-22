@@ -317,7 +317,7 @@ if (isset($_GET['jahr'])) {
 						<option selected><?php echo $now; ?></option>
 <?php
 	for ($i = 1; $i < 5; $i++)
-		echo "\t\t\t\t\t\t<option>" . strval($now + $i) . '</option>' . PHP_EOL;
+		echo "\t\t\t\t\t\t<option>" . strval($now + $i) . '</option>' . "\n";
 ?>
 					</select>
 					<label for="jahr">Kalenderjahr</label>
@@ -327,7 +327,7 @@ if (isset($_GET['jahr'])) {
 						<option value="0" selected>Deutschland</option>
 <?php
 	for ($i = 0; $i < Bundesland::Count(); $i++)
-		echo "\t\t\t\t\t\t" . '<option value="' . strval($i + 1) . '">' . htmlentities(Bundesland::GetName($i)) . '</option>' . PHP_EOL;
+		echo "\t\t\t\t\t\t" . '<option value="' . strval($i + 1) . '">' . htmlentities(Bundesland::GetName($i)) . '</option>' . "\n";
 ?>
 					</select>
 					<label for="land">Bundesland</label>
@@ -345,7 +345,7 @@ if (isset($_GET['jahr'])) {
 					<th>Feiertag</th>
 <?php
 	for ($i = 0; $i < Bundesland::Count(); $i++)
-		echo "\t\t\t\t\t" . '<th><abbr data-toggle="tooltip" title="' . htmlentities(Bundesland::GetName($i)) . '">' . Bundesland::GetName($i, true) . '</abbr></th>' . PHP_EOL;
+		echo "\t\t\t\t\t" . '<th><abbr data-toggle="tooltip" title="' . htmlentities(Bundesland::GetName($i)) . '">' . Bundesland::GetName($i, true) . '</abbr></th>' . "\n";
 ?>
 				</tr>
 			</thead>
@@ -354,7 +354,7 @@ if (isset($_GET['jahr'])) {
 	for ($i = 0; $i < $tage->Count(); $i++) {
 		$tag = $tage->GetFeiertag($i);
 		echo "\t\t\t\t<tr>";
-		echo '<td data-toggle="tooltip" title="' . strftime('%A', $tag->GetDatum('U')) . '">' . $tag->GetDatum('d.m.') . '</td><td>' . htmlentities($tag->GetName()) . '</td>' . PHP_EOL . "\t\t\t\t";
+		echo '<td data-toggle="tooltip" title="' . strftime('%A', $tag->GetDatum('U')) . '">' . $tag->GetDatum('d.m.') . '</td><td>' . htmlentities($tag->GetName()) . '</td>' . "\n\t\t\t\t";
 		for ($j = 0; $j < Bundesland::Count(); $j++) {
 			echo '<td>';
 			if ($tag->IsInBundesland($j))
@@ -363,7 +363,7 @@ if (isset($_GET['jahr'])) {
 				echo '&star;';
 			echo '</td>';
 		}
-		echo '</tr>' . PHP_EOL;
+		echo '</tr>' . "\n";
 	}
 ?>
 			</tbody>
