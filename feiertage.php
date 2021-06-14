@@ -201,6 +201,7 @@ class FeiertagKalender {
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 12, 31, $jahr), 'Silvester'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 3, 31 - ($jahr + 4 + $jahr / 4) % 7, $jahr), 'Sommerzeit (+1h)'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 10, 31 - ($jahr + 1 + $jahr / 4) % 7, $jahr), 'Winterzeit (-1h)'));
+		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 6, 14 - ($jahr + 2 + $jahr / 4) % 7, $jahr), 'Tag des Eisenbahners'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 7, 31 - ($jahr + 2 + $jahr / 4) % 7, $jahr), 'System Administrator Appreciation Day'));
 		array_push($this->feiertage, new Feiertag($jahreszeiten->get(Season::Spring), 'Frühlingsanfang'));
 		array_push($this->feiertage, new Feiertag($jahreszeiten->get(Season::Summer), 'Sommeranfang'));
