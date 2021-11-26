@@ -204,6 +204,7 @@ class FeiertagKalender {
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 6, 14 - ($jahr + 2 + $jahr / 4) % 7, $jahr), 'Tag des Eisenbahners'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 7, 31 - ($jahr + 2 + $jahr / 4) % 7, $jahr), 'System Administrator Appreciation Day'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 9, 28, $jahr), 'Safe Abortion Day'));
+		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 11, 25, $jahr), 'Internationaler Tag gegen Gewalt an Frauen'));
 		array_push($this->feiertage, new Feiertag($jahreszeiten->get(Season::Spring), 'Frühlingsanfang'));
 		array_push($this->feiertage, new Feiertag($jahreszeiten->get(Season::Summer), 'Sommeranfang'));
 		array_push($this->feiertage, new Feiertag($jahreszeiten->get(Season::Autumn), 'Herbstanfang'));
