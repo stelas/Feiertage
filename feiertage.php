@@ -26,11 +26,11 @@ abstract class Bundesland {
 	const Schleswig_Holstein = 14;
 	const Thueringen = 15;
 
-	public function Count() {
+	public static function Count() {
 		return count(self::$Namen);
 	}
 
-	public function GetName(int $land, bool $code = false) {
+	public static function GetName(int $land, bool $code = false) {
 		if ($land >= 0 && $land < self::Count())
 			return ($code) ? self::$Namen[$land][1] : self::$Namen[$land][0];
 		else
