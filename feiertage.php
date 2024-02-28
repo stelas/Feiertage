@@ -3,38 +3,43 @@
 require 'season.php';
 
 abstract class Bundesland {
-	private static $Namen = array(array('Baden-Württemberg', 'BW'), array('Bayern', 'BY'), array('Berlin', 'BE'), array('Brandenburg', 'BB'),
-					array('Bremen', 'HB'), array('Hamburg', 'HH'), array('Hessen', 'HE'), array('Mecklenburg-Vorpommern', 'MV'),
-					array('Niedersachsen', 'NI'), array('Nordrhein-Westfalen', 'NW'), array('Rheinland-Pfalz', 'RP'),
-					array('Saarland', 'SL'), array('Sachsen', 'SN'), array('Sachsen-Anhalt', 'ST'),
-					array('Schleswig-Holstein', 'SH'), array('Thüringen', 'TH'));
+	private static $ShortNames = array('BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH');
+	private static $LongNames = array('Baden-Württemberg', 'Bayern', 'Berlin', 'Brandenburg', 'Bremen', 'Hamburg', 'Hessen', 'Mecklenburg-Vorpommern', 'Niedersachsen', 'Nordrhein-Westfalen', 'Rheinland-Pfalz', 'Saarland', 'Sachsen', 'Sachsen-Anhalt', 'Schleswig-Holstein', 'Thüringen');
 
-	const Baden_Wuerttemberg = 0;
-	const Bayern = 1;
-	const Berlin = 2;
-	const Brandenburg = 3;
-	const Bremen = 4;
-	const Hamburg = 5;
-	const Hessen = 6;
-	const Mecklenburg_Vorpommern = 7;
-	const Niedersachsen = 8;
-	const Nordrhein_Westfalen = 9;
-	const Rheinland_Pfalz = 10;
-	const Saarland = 11;
-	const Sachsen = 12;
-	const Sachsen_Anhalt = 13;
-	const Schleswig_Holstein = 14;
-	const Thueringen = 15;
+	const Baden_Wuerttemberg = 1;
+	const Bayern = 2;
+	const Berlin = 3;
+	const Brandenburg = 4;
+	const Bremen = 5;
+	const Hamburg = 6;
+	const Hessen = 7;
+	const Mecklenburg_Vorpommern = 8;
+	const Niedersachsen = 9;
+	const Nordrhein_Westfalen = 10;
+	const Rheinland_Pfalz = 11;
+	const Saarland = 12;
+	const Sachsen = 13;
+	const Sachsen_Anhalt = 14;
+	const Schleswig_Holstein = 15;
+	const Thueringen = 16;
 
 	public static function Count() {
-		return count(self::$Namen);
+		return count(self::$ShortNames);
 	}
 
-	public static function GetName(int $land, bool $code = false) {
-		if ($land >= 0 && $land < self::Count())
-			return ($code) ? self::$Namen[$land][1] : self::$Namen[$land][0];
+	public static function GetName(int $id, bool $short = false) {
+		if ($id >= 1 && $id <= self::Count())
+			return ($short) ? self::$ShortNames[$id - 1] : self::$LongNames[$id - 1];
 		else
 			return '';
+	}
+
+	public static function GetIdByCode(string $code) {
+		$n = array_search($code, self::$ShortNames);
+		if ($n !== false)
+			return $n + 1;
+		else
+			return 0;
 	}
 }
 
@@ -72,16 +77,16 @@ class Feiertag {
 			return false;
 	}
 
-	public function IsInBundesland(int $land) {
-		return in_array($land, $this->laender);
+	public function IsInBundesland(int $id) {
+		return in_array($id, $this->laender);
 	}
 
-	public function GetBundeslaender(string $sep = ', ', bool $code = false) {
+	public function GetBundeslaender(string $sep = ', ', bool $short = false) {
 		$s = '';
 		for ($i = 0; $i < count($this->laender); $i++) {
 			if (strlen($s) > 0)
 				$s .= $sep;
-			$s .= Bundesland::GetName($this->laender[$i], $code);
+			$s .= Bundesland::GetName($this->laender[$i], $short);
 		}
 		return $s;
 	}
@@ -234,10 +239,10 @@ class FeiertagKalender {
 		return "END:VCALENDAR\r\n";
 	}
 
-	public function GetVCalendar(int $land = -1) {
+	public function GetVCalendar(int $landId = 0) {
 		$s = $this->GetHeader();
 		for ($i = 0; $i < count($this->feiertage); $i++)
-			if ($land == - 1 || !$this->feiertage[$i]->IsGesetzlich() || $this->feiertage[$i]->IsInBundesland($land))
+			if ($landId == 0 || !$this->feiertage[$i]->IsGesetzlich() || $this->feiertage[$i]->IsInBundesland($landId))
 				$s .= $this->feiertage[$i]->GetVEvent();
 		$s .= $this->GetFooter();
 		return $s;
@@ -259,13 +264,13 @@ if (isset($_GET['jahr']) && is_numeric($_GET['jahr']))
 $tage = new FeiertagKalender($jahr);
 if (isset($_GET['jahr'])) {
 	if (!isset($_GET['raw'])) {
-		$land = -1;
-		if (isset($_GET['land']) && is_numeric($_GET['land']))
-			$land = max(0, min(Bundesland::Count(), intval($_GET['land']))) - 1;
-		$name = Bundesland::GetName($land, true);
+		$landId = 0;
+		if (isset($_GET['land']) && is_string($_GET['land']))
+			$landId = Bundesland::GetIdByCode(strval($_GET['land']));
+		$landName = Bundesland::GetName($landId, true);
 		header('Content-Type: text/calendar; charset=utf-8');
-		header("Content-Disposition: inline; filename=\"Feiertage{$name}{$jahr}.ics\"");
-		echo $tage->GetVCalendar($land);
+		header("Content-Disposition: inline; filename=\"Feiertage{$landName}{$jahr}.ics\"");
+		echo $tage->GetVCalendar($landId);
 	}
 	else {
 		header('Content-Type: text/plain; charset=utf-8');
@@ -332,10 +337,10 @@ if (isset($_GET['jahr'])) {
 				</div></div>
 				<div class="col"><div class="form-floating">
 					<select class="form-select" id="land" name="land">
-						<option value="0" selected>Deutschland</option>
+						<option selected>Deutschland</option>
 <?php
-	for ($i = 0; $i < Bundesland::Count(); $i++)
-		echo "\t\t\t\t\t\t" . '<option value="' . strval($i + 1) . '">' . htmlentities(Bundesland::GetName($i)) . '</option>' . "\n";
+	for ($i = 1; $i <= Bundesland::Count(); $i++)
+		echo "\t\t\t\t\t\t" . '<option value="' . Bundesland::GetName($i, true) . '">' . htmlentities(Bundesland::GetName($i)) . '</option>' . "\n";
 ?>
 					</select>
 					<label for="land">Bundesland</label>
@@ -352,7 +357,7 @@ if (isset($_GET['jahr'])) {
 					<th><?php echo $now; ?></th>
 					<th>Feiertag</th>
 <?php
-	for ($i = 0; $i < Bundesland::Count(); $i++)
+	for ($i = 1; $i <= Bundesland::Count(); $i++)
 		echo "\t\t\t\t\t" . '<th><abbr data-toggle="tooltip" title="' . htmlentities(Bundesland::GetName($i)) . '">' . Bundesland::GetName($i, true) . '</abbr></th>' . "\n";
 ?>
 				</tr>
@@ -363,7 +368,7 @@ if (isset($_GET['jahr'])) {
 		$tag = $tage->GetFeiertag($i);
 		echo "\t\t\t\t<tr>";
 		echo '<td data-toggle="tooltip" title="' . strftime('%A', $tag->GetDatum('U')) . '">' . $tag->GetDatum('d.m.') . '</td><td>' . htmlentities($tag->GetName()) . '</td>' . "\n\t\t\t\t";
-		for ($j = 0; $j < Bundesland::Count(); $j++) {
+		for ($j = 1; $j <= Bundesland::Count(); $j++) {
 			echo '<td>';
 			if ($tag->IsInBundesland($j))
 				echo '&bigstar;';
