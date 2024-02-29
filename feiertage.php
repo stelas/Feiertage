@@ -298,15 +298,15 @@ if (isset($_GET['jahr'])) {
 		<meta property="twitter:description" content="iCal-Kalenderdatei mit bundes- und landesweiten Feiertagen für ausgewähltes Jahr zum Import in alle gängigen Kalenderprogramme herunterladen.">
 		<meta property="twitter:image" content="https://www.feiertage-kalender.de/img/screenshot.jpg">
 		<link rel="stylesheet" type="text/css" href="assets/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="assets/jquery.dataTables.min.css">
-		<script src="assets/jquery-3.6.0.min.js"></script>
-		<script src="assets/jquery.dataTables.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="assets/datatables.min.css">
+		<script src="assets/jquery-3.7.1.min.js"></script>
+		<script src="assets/datatables.min.js"></script>
 		<script src="assets/bootstrap.bundle.min.js"></script>
 		<script>
 			$(document).ready(function() {
 				$('[data-toggle="tooltip"]').tooltip();
 				$("#feiertage").DataTable( {
-					language: { url: "assets/de_de.json" },
+					language: { url: "assets/de-DE.json" },
 					ordering: false,
 					searching: false,
 					lengthChange: false
@@ -383,6 +383,6 @@ if (isset($_GET['jahr'])) {
 		</table>
 		<hr>
 		<p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=M4Z52Q9299MCQ&amp;source=url" target="_blank" rel="noopener"><img alt="Mit PayPal spenden" src="assets/btn_donateCC_LG.gif" width="126" height="47"></a></p>
-		<p class="text-end">&copy; 2018-<?php echo $now; ?> <a href="https://steffen.lange.fun/">Steffen Lange</a> | Alle Angaben ohne Gew&auml;hr. | <a href="https://www.dateihal.de/cms/imprint">Impressum</a> | <a href="https://www.dateihal.de/cms/privacy">Datenschutz</a></p>
+		<p class="text-end">&copy; 2018-<?php echo $now; ?> <a href="https://steffen.lange.fun/">Steffen Lange</a> | Alle Angaben ohne Gew&auml;hr. | <a href="https://github.com/stelas/Feiertage">Quellcode</a> | <a href="https://www.dateihal.de/cms/imprint">Impressum</a> | <a href="https://www.dateihal.de/cms/privacy">Datenschutz</a></p>
 	</div></body>
 </html>
