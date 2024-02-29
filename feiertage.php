@@ -77,8 +77,8 @@ class Feiertag {
 			return false;
 	}
 
-	public function IsInBundesland(int $id) {
-		return in_array($id, $this->laender);
+	public function IsInBundesland(int $landId) {
+		return in_array($landId, $this->laender);
 	}
 
 	public function GetBundeslaender(string $sep = ', ', bool $short = false) {

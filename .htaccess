@@ -1,3 +1,12 @@
 <IfModule mod_alias.c>
 RedirectMatch 404 ^/\.git
 </IfModule>
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+RewriteRule ^$ feiertage.php [L]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^Feiertage([A-Za-z]*)([0-9]+)\.ics$ feiertage.php?jahr=$2&land=$1 [L]
+</IfModule>
