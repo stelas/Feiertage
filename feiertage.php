@@ -210,6 +210,7 @@ class FeiertagKalender {
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 7, 31 - ($jahr + 2 + $jahr / 4) % 7, $jahr), 'System Administrator Appreciation Day'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 3, 31, $jahr), 'World Backup Day'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 4, 22, $jahr), 'Tag der Erde'));
+		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 6, 12, $jahr), 'Anne Frank Tag'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 8, 13, $jahr), 'Internationaler Linkshändertag'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 9, 28, $jahr), 'Safe Abortion Day'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 10, 4, $jahr), 'Welttierschutztag'));
