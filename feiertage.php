@@ -384,6 +384,6 @@ if (isset($_GET['jahr'])) {
 		</table>
 		<hr>
 		<p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=M4Z52Q9299MCQ&amp;source=url" target="_blank" rel="noopener"><img alt="Mit PayPal spenden" src="assets/btn_donateCC_LG.gif" width="126" height="47"></a></p>
-		<p class="text-end">&copy; 2018-<?php echo $now; ?> <a href="https://steffen.lange.fun/">Steffen Lange</a> | Alle Angaben ohne Gew&auml;hr. | <a href="https://github.com/stelas/Feiertage">Quellcode</a> | <a href="https://www.dateihal.de/cms/imprint">Impressum</a> | <a href="https://www.dateihal.de/cms/privacy">Datenschutz</a></p>
+		<p class="text-end">&copy; 2018-<?php echo $now; ?> <a href="https://steffen.lange.tel/">Steffen Lange</a> | Alle Angaben ohne Gew&auml;hr. | <a href="https://github.com/stelas/Feiertage">Quellcode</a> | <a href="https://www.dateihal.de/cms/imprint">Impressum</a> | <a href="https://www.dateihal.de/cms/privacy">Datenschutz</a></p>
 	</div></body>
 </html>
