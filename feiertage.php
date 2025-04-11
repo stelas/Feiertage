@@ -155,6 +155,7 @@ class FeiertagKalender {
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 2, 14, $jahr), 'Valentinstag'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 3, 8, $jahr), 'Internationaler Frauentag', array(Bundesland::Berlin, Bundesland::Mecklenburg_Vorpommern)));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 3, 17, $jahr), 'Saint Patrick\'s Day'));
+		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 4, 7, $jahr), 'Weltgesundheitstag'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 4, 30, $jahr), 'Walpurgisnacht'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 5, 1, $jahr), 'Tag der Arbeit', $alle));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 5, 8, $jahr), 'Tag der Befreiung'));
