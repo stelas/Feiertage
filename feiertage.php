@@ -2,6 +2,12 @@
 
 require 'season.php';
 
+abstract class Kategorie {
+	const Feiertag = 1;
+	const Gedenktag = 2;
+	const Aktionstag = 3;
+}
+
 abstract class Bundesland {
 	private static $ShortNames = array('BW', 'BY', 'BE', 'BB', 'HB', 'HH', 'HE', 'MV', 'NI', 'NW', 'RP', 'SL', 'SN', 'ST', 'SH', 'TH');
 	private static $LongNames = array('Baden-Württemberg', 'Bayern', 'Berlin', 'Brandenburg', 'Bremen', 'Hamburg', 'Hessen', 'Mecklenburg-Vorpommern', 'Niedersachsen', 'Nordrhein-Westfalen', 'Rheinland-Pfalz', 'Saarland', 'Sachsen', 'Sachsen-Anhalt', 'Schleswig-Holstein', 'Thüringen');
@@ -178,10 +184,12 @@ class FeiertagKalender {
 						Bundesland::Nordrhein_Westfalen, Bundesland::Rheinland_Pfalz, Bundesland::Saarland)));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 5, 14 - ($jahr - 1 + $jahr / 4) % 7, $jahr), 'Muttertag'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 6, 1, $jahr), 'Internationaler Kindertag'));
+		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 6, 5, $jahr), 'Weltumwelttag'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 9, 20, $jahr), 'Weltkindertag', array(Bundesland::Thueringen)));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 8, 15, $jahr), 'Mariä Himmelfahrt',
 					array(Bundesland::Bayern, Bundesland::Saarland)));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 10, 3, $jahr), 'Tag der Deutschen Einheit', $alle));
+		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 10, 16, $jahr), 'Welternährungstag'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 10, 31, $jahr), 'Halloween'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 10, 31, $jahr), 'Reformationstag',
 					array(Bundesland::Brandenburg, Bundesland::Mecklenburg_Vorpommern, Bundesland::Sachsen,
@@ -321,7 +329,7 @@ if (isset($_GET['jahr'])) {
 	<body><div class="container p-3 text-center">
 		<h1 class="my-4">Kalender <?php echo $now; ?> &ndash; Feiertage in Deutschland</h1>
 		<p class="text-start">
-			iCal-Kalenderdatei mit bundes- und landesweiten <a href="https://de.m.wikipedia.org/wiki/Gesetzliche_Feiertage_in_Deutschland" title="&Uuml;bersicht aller gesetzlichen Feiertage" rel="nofollow">Feiertagen</a> f&uuml;r ausgew&auml;hltes Jahr zum Import in alle g&auml;ngigen Kalenderprogramme herunterladen.
+			iCal-Kalenderdatei mit bundes- und landesweiten <a href="https://de.m.wikipedia.org/wiki/Gesetzliche_Feiertage_in_Deutschland" title="&Uuml;bersicht aller gesetzlichen Feiertage" rel="nofollow">Feiertagen</a> sowie <a href="https://de.m.wikipedia.org/wiki/Liste_von_Gedenk-_und_Aktionstagen" title="Liste von Gedenk- und Aktionstagen" rel="nofollow">Gedenk- und Aktionstagen</a> f&uuml;r ausgew&auml;hltes Jahr zum Import in alle g&auml;ngigen Kalenderprogramme herunterladen.
 			iCal bzw. iCalendar ist ein standardisiertes Datenformat zum Austausch von Kalenderinhalten. Das Format wird von der Mehrzahl der Kalenderprogramme unterst&uuml;tzt, die webbasierte Kalenderdaten einbinden k&ouml;nnen,
 			u.a. <a href="https://support.google.com/calendar/answer/37118" title="Termine in Google Kalender importieren" target="_blank" rel="nofollow">Google Kalender</a>, <a href="https://support.microsoft.com/de-de/office/importieren-oder-abonnieren-eines-kalenders-in-outlook-com-cff1429c-5af6-41ec-a5b4-74f2c278e98c" title="Importieren oder Abonnieren eines Kalenders in Outlook.com oder Outlook im Web" target="_blank" rel="nofollow">Microsoft Outlook</a>, <a href="https://support.mozilla.org/de/kb/Ferienkalender-hinzufuegen" title="Feiertags- und Schulferienkalender hinzuf&uuml;gen" target="_blank" rel="nofollow">Mozilla Thunderbird</a>, <a href="https://support.apple.com/de-de/guide/iphone/iph3d1110d4/ios#iph30203de42" title="Verwenden mehrerer Kalender auf dem iPhone" target="_blank" rel="nofollow">iPhone Kalender</a> und <a href="https://support.apple.com/de-de/guide/calendar/icl1023/mac" title="Exportieren oder Importieren von Kalendern auf dem Mac" target="_blank" rel="nofollow">macOS Kalender</a>.
 		</p>
