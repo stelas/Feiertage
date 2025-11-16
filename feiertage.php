@@ -211,6 +211,7 @@ class FeiertagKalender {
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 12, 25, $jahr), '1. Weihnachtstag', $alle));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 12, 26, $jahr), '2. Weihnachtstag', $alle));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 12, 6, $jahr), 'Nikolaus'));
+		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 12, 21, $jahr), 'Thomastag'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 12, 24, $jahr), 'Heiliger Abend'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 12, 31, $jahr), 'Silvester'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 3, 31 - ($jahr + 4 + $jahr / 4) % 7, $jahr), 'Sommerzeit (+1h)'));
