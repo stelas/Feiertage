@@ -217,6 +217,7 @@ class FeiertagKalender {
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 3, 31 - ($jahr + 4 + $jahr / 4) % 7, $jahr), 'Sommerzeit (+1h)'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 10, 31 - ($jahr + 1 + $jahr / 4) % 7, $jahr), 'Winterzeit (-1h)'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 6, 14 - ($jahr + 2 + $jahr / 4) % 7, $jahr), 'Tag des Eisenbahners'));
+		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 7, 7 - ($jahr + 4 + $jahr / 4) % 7, $jahr), 'Tag des Bergmanns'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 7, 31 - ($jahr + 2 + $jahr / 4) % 7, $jahr), 'System Administrator Appreciation Day'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 3, 31, $jahr), 'World Backup Day'));
 		array_push($this->feiertage, new Feiertag(mktime(0, 0, 0, 4, 22, $jahr), 'Tag der Erde'));
@@ -395,6 +396,6 @@ if (isset($_GET['jahr'])) {
 		</table>
 		<hr>
 		<p><a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=M4Z52Q9299MCQ&amp;source=url" title="Mit PayPal spenden" rel="noopener"><img alt="Mit PayPal spenden" title="Mit PayPal spenden" src="assets/btn_donateCC_LG.gif" width="126" height="47"></a></p>
-		<p class="text-end">&copy; 2018-<?php echo $now; ?> <a href="https://steffen.lange.tel/" title="Steffen Lange">Steffen Lange</a> | Alle Angaben ohne Gew&auml;hr. | <a rel="nofollow" href="https://github.com/stelas/Feiertage" title="Quellcode">Quellcode</a> | <a href="https://www.dateihal.de/cms/imprint" title="Impressum">Impressum</a> | <a href="https://www.dateihal.de/cms/privacy" title="Datenschutz">Datenschutz</a></p>
+		<p class="text-end">&copy; 2018-<?php echo $now; ?> <a href="https://steffen.lange.tel/" title="Steffen Lange">Steffen Lange</a> | Alle Angaben ohne Gew&auml;hr. | <a rel="nofollow" href="https://github.com/stelas/Feiertage" title="Quellcode">Quellcode</a> | <a href="https://www.dateihal.de/cms/imprint" title="Kontakt">Kontakt</a> | <a href="https://www.dateihal.de/cms/privacy" title="Datenschutz">Datenschutz</a></p>
 	</div></body>
 </html>
